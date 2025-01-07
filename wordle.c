@@ -134,7 +134,7 @@ p_WordleGame readFile(const char* fileName, uint32_t numbOfWords)
     memset(buf, 0, sizeof(char));
     
     // read from file
-    while(fgets(buf, 10, wordFile) && (i < numbOfWords))
+    while(fgets(buf, 10, wordFile) && (i <= numbOfWords))
     {
         memset(WordleGame->arr[i], 0, sizeof(char));
         bufReadFile_Lenght = strlen(buf)-1;
@@ -245,8 +245,9 @@ bool validInput(char *inputWord)
     else return VALID_INPUT;
 }
 
-void gameLoop(p_WordleGame WordleGame)
+void gameLoop()
 {
+    p_WordleGame WordleGame = readFile(FILENAME, 100);
     bool res = false;
     bool checkValid = false;
     randomWord(WordleGame);
@@ -259,7 +260,7 @@ void gameLoop(p_WordleGame WordleGame)
         checkValid = validInput(WordleGame->guessWord);    
         while(!checkValid)
         {
-            printf("\nInput guess word not valid ! Please enter again: ");
+            printf("\nInput guess word not valid (5 charaters)!\nPlease enter again: ");
             inputGuessWord(WordleGame);
             checkValid = validInput(WordleGame->guessWord);
         }
@@ -284,9 +285,6 @@ void gameLoop(p_WordleGame WordleGame)
             return;
         }               
     }
-
-
-
 }
 
 

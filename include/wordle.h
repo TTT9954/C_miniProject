@@ -8,6 +8,7 @@
 #include <string.h>
 #include <unistd.h>
 
+#define FILENAME "E:\\FPT_documents\\C\\Words.txt"
 #define RESULT_GREEN        0
 #define RESULT_YELLOW       1
 #define RESULT_RED          2
@@ -47,6 +48,6 @@ void prompt(p_WordleGame WordleGame);
 void printResult(char res[NUMBER_CHAR], char guess[NUMBER_CHAR], char correct[NUMBER_CHAR]);
 void inputGuessWord(p_WordleGame WordleGame);
 bool validInput(char *inputWord);
-void gameLoop(p_WordleGame WordleGame);
+void gameLoop();
 
 #endif

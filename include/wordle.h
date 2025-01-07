@@ -8,21 +8,26 @@
 #include <string.h>
 #include <unistd.h>
 
-#define RESULT_GREEN    0
-#define RESULT_YELLOW   1
-#define RESULT_RED      2
-#define NUMBER_WORD     100
-#define NUMBER_CHAR     5
+#define RESULT_GREEN        0
+#define RESULT_YELLOW       1
+#define RESULT_RED          2
+#define NUMBER_WORD         100
+#define NUMBER_CHAR         5
 #define COLOR_GREEN       "\033[0;32m"
 #define COLOR_YELLOW      "\033[0;33m"
 #define COLOR_RED         "\033[0;31m"
 #define COLOR_DEFAULT     "\033[0m"
+#define BAD_VALID_INPUT     false
+#define NO_SUCH_WORD        false
+#define VALID_INPUT         true
+
 typedef struct WordleGame
 {
     char arr[NUMBER_WORD][NUMBER_CHAR+1];
     char guessWord[NUMBER_CHAR+1];
     char *correctWord;
     uint8_t result[NUMBER_CHAR];
+    uint8_t failedCount;
     uint8_t n;
 }WordleGame_t;
 
@@ -41,6 +46,7 @@ void randomWord(p_WordleGame WordleGame);
 void prompt(p_WordleGame WordleGame);
 void printResult(char res[NUMBER_CHAR], char guess[NUMBER_CHAR], char correct[NUMBER_CHAR]);
 void inputGuessWord(p_WordleGame WordleGame);
+bool validInput(char *inputWord);
 void gameLoop(p_WordleGame WordleGame);
 
 #endif

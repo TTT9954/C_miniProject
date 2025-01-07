@@ -9,39 +9,15 @@ int main(int agv, char *argv[])
     uint8_t failedTime = 5;
     char *guessWord = "";
     char *correctWord = "";
-    bool res = false;
+    bool winner = false;
     char exit = 'Y';
     seed();
     p_WordleGame WordleGame = readFile(FILENAME, 100);
     printf("\n");
 
     do
-    {
-        randomWord(WordleGame);
-        while(failedTime)
-        {
-            printf("\nEnter your guess word: ");
-            inputGuessWord(WordleGame);    
-            fflush(stdin);      
-            checkWord(WordleGame->guessWord, WordleGame);
-            prompt(WordleGame);
-            printResult(WordleGame->result, WordleGame->guessWord, WordleGame->correctWord);
-            res = checkRight(WordleGame->result);
-            if(!res)
-            {
-                failedTime--;             
-                printf("\nWrong answer ! You have %d time(s) left.\n", failedTime);
-                if(!failedTime)
-                {
-                    printf("\nYou lose ! The correct word is '%s'.\n", WordleGame->correctWord);
-                }
-            }
-            else 
-            {
-                printf("You are right!");
-                failedTime = 0;
-            }                      
-        }
+    {      
+        gameLoop(WordleGame);
         printf("\nDo you want to play anymore (Y/N) ?: ");
         scanf("%c", &exit);
         fflush(stdin);

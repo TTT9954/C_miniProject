@@ -223,17 +223,68 @@ void printResult(char res[NUMBER_CHAR], char guess[NUMBER_CHAR], char correct[NU
 void inputGuessWord(p_WordleGame WordleGame){
     int size = 0;
 
-    memset(WordleGame->guessWord, 0, 7);
-    fgets(WordleGame->guessWord, 7, stdin);
+    memset(WordleGame->guessWord, 0, 8);
+    fgets(WordleGame->guessWord, 8, stdin);
     fflush(stdin);
     size = strlen(WordleGame->guessWord)-1;
     WordleGame->guessWord[size] = 0;
 }
 
+bool validInput(char *inputWord)
+{
+    uint8_t length = getLength(inputWord);
+
+    if(length != 5)
+    {
+        return BAD_VALID_INPUT;
+    }
+    else if(!length)
+    {
+        return NO_SUCH_WORD;
+    }
+    else return VALID_INPUT;
+}
 
 void gameLoop(p_WordleGame WordleGame)
 {
-    prompt(WordleGame);
+    bool res = false;
+    bool checkValid = false;
+    randomWord(WordleGame);
+    WordleGame->failedCount = 5;
+    while(WordleGame->failedCount)
+    {     
+        printf("\nEnter your guess word: ");
+        inputGuessWord(WordleGame);    
+        fflush(stdin);     
+        checkValid = validInput(WordleGame->guessWord);    
+        while(!checkValid)
+        {
+            printf("\nInput guess word not valid ! Please enter again: ");
+            inputGuessWord(WordleGame);
+            checkValid = validInput(WordleGame->guessWord);
+        }
+        checkWord(WordleGame->guessWord, WordleGame);
+        prompt(WordleGame);
+        printResult(WordleGame->result, WordleGame->guessWord, WordleGame->correctWord);
+        res = checkRight(WordleGame->result);    
+        if(!res)
+        {
+            WordleGame->failedCount--;             
+            printf("\nWrong answer ! You have %d time(s) left.\n", WordleGame->failedCount);
+            if(!WordleGame->failedCount)
+            {
+                printf("\nYou lose ! The correct word is '%s'.\n", WordleGame->correctWord);
+                return;
+            }
+        }
+        else 
+        {
+            printf("You are right!");
+            WordleGame->failedCount = 0;
+            return;
+        }               
+    }
+
 
 
 }

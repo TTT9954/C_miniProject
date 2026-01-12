@@ -8,12 +8,13 @@
 #include <string.h>
 #include <unistd.h>
 
-#define FILENAME "E:\\FPT_documents\\C\\Words.txt"
+#define FILENAME "/home/tutt/Documents/MyGit/C_miniProject/Words.txt"
 #define RESULT_GREEN        0
 #define RESULT_YELLOW       1
 #define RESULT_RED          2
 #define NUMBER_WORD         100
 #define NUMBER_CHAR         5
+#define MAX_COUNTWORDS      NUMBER_CHAR + 1
 #define COLOR_GREEN       "\033[0;32m"
 #define COLOR_YELLOW      "\033[0;33m"
 #define COLOR_RED         "\033[0;31m"
@@ -46,7 +47,7 @@ p_WordleGame readFile(const char* fileName, uint32_t max);
 void randomWord(p_WordleGame WordleGame);
 void prompt(p_WordleGame WordleGame);
 void printResult(char res[NUMBER_CHAR], char guess[NUMBER_CHAR], char correct[NUMBER_CHAR]);
-void inputGuessWord(p_WordleGame WordleGame);
+bool inputGuessWord(p_WordleGame WordleGame);
 bool validInput(char *inputWord);
 void gameLoop();
 
